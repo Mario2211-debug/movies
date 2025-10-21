@@ -27,7 +27,7 @@ export default function MoviePage() {
     fetchMovie();
   }, [handleMovieById, movieId]);
 
-  console.log(movie)
+  console.log("movie em id", movie)
 
   const handleRatingChange = async (rating: number) => {
     if (movie) {

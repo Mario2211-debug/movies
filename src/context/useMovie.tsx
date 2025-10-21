@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useState, useContext, createContext, useEffect} from 'react'
+import React, {useState, useContext, createContext, useEffect, useCallback} from 'react'
 import { Movie, movieUpdate} from '@/type'
 import { createMovie, updateMovie, getMovies, getMoviesById, deleteMovie, getWatchedMovies, getNotWatchedMovies, getMoviesByRating } from '@/services/api'
 
@@ -26,7 +26,15 @@ export function MovieProvider({children} : {children: React.ReactNode})
 
 
     useEffect(() => {
-        getMovies().then(setMovies)
+        const fetchMovies = async () => {
+            try {
+              const movies = await getMovies();
+              setMovies(movies);
+            } catch (err) {
+              console.error(err);
+            }
+          };
+          fetchMovies();
     }, [])
 
 
@@ -42,7 +50,7 @@ export function MovieProvider({children} : {children: React.ReactNode})
     const handleUpdateData = async (id: string, updateData: movieUpdate ) => {
         try {
             const data = await updateMovie(id, updateData);
-            setMovies((prev) => prev.map((m:any) => (m.id === id ? {...m, data} : m)));
+            setMovies((prev) => prev.map((m) => (m._id === id ? {...m, ...data} : m)));
         } catch (error) {
             
         }
@@ -114,14 +122,15 @@ export function MovieProvider({children} : {children: React.ReactNode})
         }
     }
 
-    const loadAllMovies = async () => {
-        try {
-            const movies = await getMovies();
-            setMovies(movies);
-        } catch (error) {
-            console.error('Error loading all movies:', error);
-        }
-    }
+    const loadAllMovies = useCallback( async () => {
+            try {
+                const movies = await getMovies();
+                setMovies(movies);
+            } catch (error) {
+                console.error('Error loading all movies:', error);
+            }
+        }, []
+    )
     return(
     <MovieContext.Provider value={{
         movies, 

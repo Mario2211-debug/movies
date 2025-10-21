@@ -20,13 +20,13 @@ export default function HomePage() {
   } = useMovie();
   
   const [currentView, setCurrentView] = useState<ViewMode>('all');
-  const [showAddModal, setShowAddModal] = useState(false);
+  // const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<any>(null);
 
   useEffect(() => {
     loadAllMovies();
-  }, [loadAllMovies]);
+  }, []);
 
   const handleViewChange = (view: ViewMode) => {
     setCurrentView(view);
