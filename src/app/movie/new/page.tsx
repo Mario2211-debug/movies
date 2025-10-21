@@ -31,7 +31,7 @@ export default function NewMoviePage() {
     year: "",
     gender: "",
     watched: false,
-    rating: 0,
+    rating: 1,
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
