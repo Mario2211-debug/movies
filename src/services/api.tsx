@@ -51,7 +51,7 @@ export const updateMovie = async (id: string, data: movieUpdate) => {
 }
 
 
-export const getMoviesById = async (id: any) => {
+export const getMoviesById = async (id: string) => {
     const res = await fetch(`/api/movie/${id}`,  {
         method: 'GET',
         headers: {'Content-Type':'application/json'}

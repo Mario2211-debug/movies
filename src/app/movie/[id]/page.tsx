@@ -2,10 +2,9 @@
 
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Play, Clock, Film, CheckCircle, Eye, Star } from "lucide-react";
+import { Play, Film, CheckCircle, Eye, Star } from "lucide-react";
 import { useMovie } from "@/context/useMovie";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Movie } from "@/type";
 import StarRating from "@/components/StarRating";
 

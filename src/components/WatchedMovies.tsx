@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Play, Film, Trash2, Edit, CheckCircle } from "lucide-react";
+import { Play, Trash2, Edit, CheckCircle } from "lucide-react";
 import { useMovie } from "@/context/useMovie";
 import { useState } from "react";
 

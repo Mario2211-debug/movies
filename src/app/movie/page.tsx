@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Plus, Edit, Eye, EyeOff, Star, List } from "lucide-react";
+import { Eye, EyeOff, Star, List } from "lucide-react";
 import { useMovie } from "@/context/useMovie";
 import AllMovies from "@/components/AllMovies";
 import WatchedMovies from "@/components/WatchedMovies";
