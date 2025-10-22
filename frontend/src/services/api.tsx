@@ -1,8 +1,10 @@
 import { Movie, movieUpdate } from "@/type";
 
+const api = process.env.NEXT_PUBLIC_API
+
 // GET /api/movies - Retorna todos os filmes ou com filtros
 export const getMovies = async (filters?: { watched?: boolean; sortBy?: string; order?: string }) => {
-    let url = '/api/movies';
+    let url = `${api}/api/movies`;
     const params = new URLSearchParams();
     
     if (filters?.watched !== undefined) {
@@ -40,7 +42,7 @@ export const getMoviesByRating = async () => {
 }
 
 export const updateMovie = async (id: string, data: movieUpdate) => {
-    const res = await fetch(`/api/movie/${id}`,  {
+    const res = await fetch(`${api}/api/movie/${id}`,  {
         method: 'PUT',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(data)
@@ -51,7 +53,7 @@ export const updateMovie = async (id: string, data: movieUpdate) => {
 
 
 export const getMoviesById = async (id: string) => {
-    const res = await fetch(`/api/movie/${id}`,  {
+    const res = await fetch(`${api}/api/movie/${id}`,  {
         method: 'GET',
         headers: {'Content-Type':'application/json'}
     });
@@ -60,7 +62,7 @@ export const getMoviesById = async (id: string) => {
 }
 
 export const createMovie = async (data: Movie) => {
-    const response = await fetch('/api/movie', {
+    const response = await fetch(`${api}/api/movie`, {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(data)
@@ -70,7 +72,7 @@ export const createMovie = async (data: Movie) => {
 
 // DELETE /api/movies/:id - Deleta um filme
 export const deleteMovie = async (id: string) => {
-    const response = await fetch(`/api/movies/${id}`, {
+    const response = await fetch(`${api}/api/movies/${id}`, {
         method: 'DELETE',
         headers: {'Content-Type':'application/json'}
     });
