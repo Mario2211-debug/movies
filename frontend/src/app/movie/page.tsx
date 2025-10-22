@@ -12,6 +12,7 @@ type ViewMode = 'all' | 'watched' | 'notWatched' | 'byRating';
 export default function HomePage() {
   const { 
     movies, 
+    loading,
     loadAllMovies, 
     loadWatchedMovies, 
     loadNotWatchedMovies, 
@@ -19,9 +20,6 @@ export default function HomePage() {
   } = useMovie();
   
   const [currentView, setCurrentView] = useState<ViewMode>('all');
-  // const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [selectedMovie, setSelectedMovie] = useState<any>(null);
 
   useEffect(() => {
     loadAllMovies();
@@ -46,8 +44,7 @@ export default function HomePage() {
   };
 
   const handleEditMovie = (movie: any) => {
-    setSelectedMovie(movie);
-    setShowEditModal(true);
+    window.location.href = `/movie/${movie._id}/edit`;
   };
 
   const renderCurrentView = () => {
@@ -117,35 +114,17 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      {renderCurrentView()}
-
-
-
-      {showEditModal && selectedMovie && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 p-6 rounded-lg max-w-md w-full mx-4">
-            <h3 className="text-xl font-semibold text-white mb-4">Editar Filme</h3>
-            <p className="text-gray-400 mb-4">Redirecionando para página de edição...</p>
-            <div className="flex gap-2">
-              <button
-                onClick={() => window.location.href = `/movie/${selectedMovie._id}`}
-                className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition"
-              >
-                Continuar
-              </button>
-              <button
-                onClick={() => {
-                  setShowEditModal(false);
-                  setSelectedMovie(null);
-                }}
-                className="flex-1 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
+      
+      {loading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#b7c8d4]"></div>
+          <span className="ml-4 text-[#b7c8d4]">Carregando filmes...</span>
         </div>
+      ) : (
+        renderCurrentView()
       )}
+
+
     </>
   );
 }

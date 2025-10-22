@@ -26,6 +26,7 @@ export default function NewMoviePage() {
   const { handleCreate } = useMovie();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
+  
   const [formData, setFormData] = useState<FormData>({
     title: "",
     year: "",

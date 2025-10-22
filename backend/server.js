@@ -1,14 +1,9 @@
 // ===== CONSTANTES FIXAS =====
 import express from 'express'
 import cors from 'cors'
-import next from 'next'
 import dotenv from 'dotenv'
 import { dbConnect } from './config/dbConnect.js'
 dotenv.config();
-
-const dev = process.env.NODE_ENV !== 'production';
-const nextApp = next({ dev });
-const handle = nextApp.getRequestHandler();
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -138,16 +133,11 @@ app.delete('/api/movies/:id', async (req, res) => {
 
 // ===== INICIALIZAÇÃO DO SERVIDOR (também não se deve mexer)=====
 
-app.use((req, res) => {
-  return handle(req, res);
-});
-
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 const iniciarServidor = async () => {
   try {
     await dbConnect();
-    await nextApp.prepare();
     app.listen(PORT, () => {
       console.log(`Servidor Next.js + Express a correr em http://localhost:${PORT}`);
     });

@@ -21,7 +21,6 @@ export const getMovies = async (filters?: { watched?: boolean; sortBy?: string; 
     
     const res = await fetch(url);
     const movies = await res.json();
-    console.log("moovie em api:", movies)
     return movies;
 }
 

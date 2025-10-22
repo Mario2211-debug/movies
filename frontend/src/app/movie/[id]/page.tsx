@@ -16,17 +16,16 @@ export default function MoviePage() {
 
   useEffect(() => {
     const fetchMovie = async () => {
+      if (!movieId) return;
+      
       const res = await handleMovieById(movieId);
       
       if (res !== undefined) {
-        console.log(res)
         setMovie(res);
       }
     };
     fetchMovie();
-  }, [handleMovieById, movieId]);
-
-  console.log("movie em id", movie)
+  }, [movieId]); 
 
   const handleRatingChange = async (rating: number) => {
     if (movie) {

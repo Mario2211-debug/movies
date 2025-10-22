@@ -6,6 +6,7 @@ import { createMovie, updateMovie, getMovies, getMoviesById, deleteMovie, getWat
 
 interface MovieContextType{
     movies: Movie[],
+    loading: boolean,
     handleCreate: (data: Movie) => Promise<void>;
     handleUpdateData: (id:string , data: movieUpdate) => Promise<void>;
     handleMovieById: (id: string) => Promise<Movie | undefined>;
@@ -23,19 +24,8 @@ const MovieContext = createContext<MovieContextType | undefined>(undefined)
 export function MovieProvider({children} : {children: React.ReactNode})
 {
     const [movies, setMovies] = useState<Movie[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
 
-
-    useEffect(() => {
-        const fetchMovies = async () => {
-            try {
-              const movies = await getMovies();
-              setMovies(movies);
-            } catch (err) {
-              console.error(err);
-            }
-          };
-          fetchMovies();
-    }, [])
 
 
     const handleCreate = async (movie: Movie) => {
@@ -60,12 +50,11 @@ export function MovieProvider({children} : {children: React.ReactNode})
     const handleMovieById = async (id: string ) => {
         try {
             const data = await getMoviesById(id);
-            console.log(data)
             return data;
         } catch (error) {
-            
+            console.error('Error fetching movie by ID:', error);
+            return undefined;
         }
-
     }
 
     const handleUpdateRating = async (id: string, rating: number) => {
@@ -95,45 +84,61 @@ export function MovieProvider({children} : {children: React.ReactNode})
         }
     }
 
-    const loadWatchedMovies = async () => {
+    const loadWatchedMovies = useCallback(async () => {
+        if (loading) return; 
+        setLoading(true);
         try {
             const movies = await getWatchedMovies();
             setMovies(movies);
         } catch (error) {
             console.error('Error loading watched movies:', error);
+        } finally {
+            setLoading(false);
         }
-    }
+    }, [loading]);
 
-    const loadNotWatchedMovies = async () => {
+    const loadNotWatchedMovies = useCallback(async () => {
+        if (loading) return; 
+        setLoading(true);
         try {
             const movies = await getNotWatchedMovies();
             setMovies(movies);
         } catch (error) {
             console.error('Error loading not watched movies:', error);
+        } finally {
+            setLoading(false);
         }
-    }
+    }, [loading]);
 
-    const loadMoviesByRating = async () => {
+    const loadMoviesByRating = useCallback(async () => {
+        if (loading) return;
+        setLoading(true);
         try {
             const movies = await getMoviesByRating();
             setMovies(movies);
         } catch (error) {
             console.error('Error loading movies by rating:', error);
+        } finally {
+            setLoading(false);
         }
-    }
+    }, [loading]);
 
-    const loadAllMovies = useCallback( async () => {
-            try {
-                const movies = await getMovies();
-                setMovies(movies);
-            } catch (error) {
-                console.error('Error loading all movies:', error);
-            }
-        }, []
-    )
+    const loadAllMovies = useCallback(async () => {
+        if (loading) return;
+        setLoading(true);
+        try {
+            const movies = await getMovies();
+            setMovies(movies);
+        } catch (error) {
+            console.error('Error loading all movies:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, [loading]);
     return(
     <MovieContext.Provider value={{
         movies, 
+        loading,
         handleCreate, 
         handleUpdateData, 
         handleMovieById, 
