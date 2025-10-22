@@ -5,7 +5,12 @@ import dotenv from 'dotenv'
 import { dbConnect } from './config/dbConnect.js'
 dotenv.config();
 const app = express();
-app.use(cors());
+const allowedURL = process.env.FRONTEND
+
+
+app.use(cors({
+  origin: allowedURL
+}));
 app.use(express.json());
 
 // Esta constante é relativa às coleções da tua base de dados e deves acrescentar mais se for o caso
