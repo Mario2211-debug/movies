@@ -1,5 +1,7 @@
 # 🎬 CineVerse - Sistema de Gerenciamento de Filmes
 
+![Bytes4Future](https://img.shields.io/badge/Bytes4Future-Junior%20Fullstack%20Developer-00b894?style=flat-square)
+
 Um sistema completo de gerenciamento de filmes construído com Next.js, Express.js e MongoDB, oferecendo uma interface moderna e intuitiva para organizar sua coleção cinematográfica.
 
 ## 📋 Índice
